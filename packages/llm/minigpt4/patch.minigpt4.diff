@@ -41,7 +41,7 @@ index 087fc8e..408bb32 100644
  set(OPENCV_INCLUDE_DIRS "")
  set(OPENCV_LIBS "")
 diff --git a/minigpt4.cpp b/minigpt4.cpp
-index f8287f1..62efeac 100644
+index f8287f1..e32f590 100644
 --- a/minigpt4.cpp
 +++ b/minigpt4.cpp
 @@ -1773,12 +1773,13 @@ public:
@@ -54,8 +54,9 @@ index f8287f1..62efeac 100644
              llm_params.n_ctx = n_ctx;
              llm_params.n_batch = n_batch;
              llm_params.seed = seed;
-             llm_params.use_mmap = true;
-+            llm_params.n_gpu_layers = 20;
+-            llm_params.use_mmap = true;
++            llm_params.use_mmap = false;
++            llm_params.n_gpu_layers = 999;
              // llm_params.use_mlock = true;
              llm_model = LLMModel(llama_load_model_from_file(llm_path.string().c_str(), llm_params));
              llm_ctx = LLMContext(llama_new_context_with_model(&*llm_model, llm_params));
