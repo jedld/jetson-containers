@@ -55,7 +55,7 @@ index f8287f1..62efeac 100644
              llm_params.n_batch = n_batch;
              llm_params.seed = seed;
              llm_params.use_mmap = true;
-+            llm_params.n_gpu_layers = 999;
++            llm_params.n_gpu_layers = 20;
              // llm_params.use_mlock = true;
              llm_model = LLMModel(llama_load_model_from_file(llm_path.string().c_str(), llm_params));
              llm_ctx = LLMContext(llama_new_context_with_model(&*llm_model, llm_params));
@@ -91,7 +91,7 @@ index 7d536c1..0f73551 100644
  gradio
 \ No newline at end of file
 diff --git a/minigpt4/webui.py b/minigpt4/webui.py
-index fbd2017..b3e5ff7 100644
+index fbd2017..6475989 100644
 --- a/minigpt4/webui.py
 +++ b/minigpt4/webui.py
 @@ -11,7 +11,7 @@ import gradio as gr
@@ -103,12 +103,23 @@ index fbd2017..b3e5ff7 100644
  article = """<div style='display:flex; gap: 0.25rem; '><a href='https://github.com/Vision-CAIR/MiniGPT-4'><img src='https://img.shields.io/badge/Github-Code-blue'></a></div>
  """
  image_ready = False
+@@ -84,8 +84,8 @@ def start(share: bool):
+                 history = gr.State()
+ 
+                 with gr.Row():
+-                    submit = gr.Button(value="Send message", variant="secondary").style(full_width=True)
+-                    clear = gr.Button(value="Reset", variant="secondary").style(full_width=False)
++                    submit = gr.Button(value="Send message", variant="secondary")
++                    clear = gr.Button(value="Reset", variant="secondary")
+                     # stop = gr.Button(value="Stop", variant="secondary").style(full_width=False)
+ 
+         clear.click(clear_state, inputs=[history, image, message], outputs=[history, image, message, upload_button], queue=False)
 @@ -104,7 +104,7 @@ def start(share: bool):
          )
          # stop.click(fn=None, inputs=None, outputs=None, cancels=[submit_click_event, message_submit_event], queue=False)
  
 -    demo.launch(enable_queue=True, share=share)
-+    demo.launch(enable_queue=True, share=share, server_name=os.environ.get('GRADIO_SERVER_NAME', '0.0.0.0'), server_port=int(os.environ.get('GRADIO_SERVER_PORT', 7860)))
++    demo.launch(share=share, server_name=os.environ.get('GRADIO_SERVER_NAME', '0.0.0.0'), server_port=int(os.environ.get('GRADIO_SERVER_PORT', 7860))).queue()
  
  if __name__ == "__main__":
      parser = argparse.ArgumentParser(description='Test loading minigpt4')
