@@ -38,7 +38,7 @@ RUN git clone --branch=${MINIGPT4_CPP_BRANCH} --depth=1 --recursive https://gith
     git status && \
     mkdir build && \
     cd build && \
-    cmake -DMINIGPT4_CUBLAS=ON -DMINIGPT4_CUDA_FP16=ON -DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES} ../ 
+    cmake ../ 
     
 #RUN cd minigpt4.cpp/build/_deps/llama_cpp-src && \
 #    git apply /tmp/patch.llamacpp.diff && \
