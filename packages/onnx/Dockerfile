@@ -11,6 +11,7 @@ FROM ${BASE_IMAGE}
 
 ARG ONNX_VERSION
 
+RUN pip3 install protobuf typing-extensions
 RUN pip3 install --no-cache-dir --verbose git+https://github.com/onnx/onnx@${ONNX_VERSION}
 #RUN pip3 install --no-cache-dir --verbose onnx
 	
